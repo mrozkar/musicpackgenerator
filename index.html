@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.2/FileSaver.min.js"></script>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Przesyłanie plików</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+		    background-image: url('https://www.textures4photoshop.com/tex/thumbs/minecraft-texture-thumb17.jpg');
+			background-repeat: repeat;
+			
+		.file-container {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			width: 200px;
+			height: 200px;
+			border: 4px inset #ccc;
+			border-color: #30322D; 
+			margin-bottom: 20px;
+			text-align: center;
+			padding: 10px;
+			background-color: #BCC2B1
+		}
+		
+		h1 {
+		color: #ffffff;
+		}
+		
+		p {
+			font-size: 24px;
+			font-family: Arial, sans-serif;
+			color: #ffffff;
+		}		
+		
+		a {
+			font-size: 24px;
+			font-family: Arial, sans-serif;
+		}
+
+        .file-container h2 {
+            margin: 0;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+        .file-input {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .file-input label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .file-input input {
+            display: block;
+            margin: 0 auto;
+        }
+		
+		.button-37 {
+		  background-color: #13aa52;
+		  border: 5px inset #13aa52;
+		  border-radius: 4px;
+		  box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+		  box-sizing: border-box;
+		  color: #fff;
+		  cursor: pointer;
+		  font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont, sans-serif;
+		  font-size: 16px;
+		  font-weight: 400;
+		  outline: none;
+		  outline: 0;
+		  padding: 10px 25px;
+		  text-align: center;
+		  transform: translateY(0);
+		  transition: transform 150ms, box-shadow 150ms;
+		  user-select: none;
+		  -webkit-user-select: none;
+		  touch-action: manipulation;
+		}
+
+		.button-37:hover {
+		  box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
+		  transform: translateY(-2px);
+		}
+
+		@media (min-width: 768px) {
+		  .button-37 {
+			padding: 10px 30px;
+		  }
+		}
+		
+		
+    </style>
+</head>
+<body>
+    <h1>Music Texture Pack Genetator</h1>
+	<p>Choose which discs you want to replace. You dont have to insert image and audio, you can just select one</p>
+	<a href="https://convertio.co/mp3-ogg/" target="_blank">Convert mp3 to ogg</a>
+	<a href="https://convertio.co/jpg-png/" target="_blank">Convert jpg to png</a>
+    <form id="fileUploadForm">
+        <div class="file-container">
+            <h2>13</h2>
+            <div class="file-input">
+                <label for="audioFile1">Choose audio (.ogg) file</label>
+                <input type="file" id="audioFile1" name="audioFile1" accept=".ogg">
+            </div>
+            <div class="file-input">
+                <label for="imageFile1">Choose texture (.png) file</label>
+                <input type="file" id="imageFile1" name="imageFile1" accept=".png">
+            </div>
+        </div>
+        <div class="file-container">
+            <h2>cat</h2>
+            <div class="file-input">
+                <label for="audioFile2">Choose audio (.ogg) file</label>
+                <input type="file" id="audioFile2" name="audioFile2" accept=".ogg">
+            </div>
+            <div class="file-input">
+                <label for="imageFile2">Choose texture (.png) file</label>
+                <input type="file" id="imageFile2" name="imageFile2" accept=".png">
+            </div>
+        </div>
+        <div class="file-container">
+            <h2>blocks</h2>
+            <div class="file-input">
+                <label for="audioFile3">Choose audio (.ogg) file</label>
+                <input type="file" id="audioFile3" name="audioFile3" accept=".ogg">
+            </div>
+            <div class="file-input">
+                <label for="imageFile3">Choose texture (.png) file</label>
+                <input type="file" id="imageFile3" name="imageFile3" accept=".png">
+            </div>
+        </div>
+        <div class="file-container">
+            <h2>chirp</h2>
+            <div class="file-input">
+                <label for="audioFile4">Choose audio (.ogg) file</label>
+                <input type="file" id="audioFile4" name="audioFile4" accept=".ogg">
+            </div>
+            <div class="file-input">
+                <label for="imageFile4">Choose texture (.png) file</label>
+                <input type="file" id="imageFile4" name="imageFile4" accept=".png">
+            </div>
+        </div>
+        <div class="file-container">
+            <h2>far</h2>
+            <div class="file-input">
+                <label for="audioFile5">Choose audio (.ogg) file</label>
+                <input type="file" id="audioFile5" name="audioFile5" accept=".ogg">
+            </div>
+            <div class="file-input">
+                <label for="imageFile5">Choose texture (.png) file</label>
+                <input type="file" id="imageFile5" name="imageFile5" accept=".png">
+            </div>
+        </div>
+        <div class="file-container">
+            <h2>mall</h2>
+            <div class="file-input">
+                <label for="audioFile6">Choose audio (.ogg) file</label>
+                <input type="file" id="audioFile6" name="audioFile6" accept=".ogg">
+            </div>
+            <div class="file-input">
+                <label for="imageFile6">Choose texture (.png) file</label>
+                <input type="file" id="imageFile6" name="imageFile6" accept=".png">
+            </div>
+        </div>
+        <div class="file-container">
+            <h2>mellohi</h2>
+            <div class="file-input">
+                <label for="audioFile7">Choose audio (.ogg) file</label>
+                <input type="file" id="audioFile7" name="audioFile7" accept=".ogg">
+            </div>
+            <div class="file-input">
+                <label for="imageFile7">Choose texture (.png) file</label>
+                <input type="file" id="imageFile7" name="imageFile7" accept=".png">
+            </div>
+        </div>
+        <div class="file-container">
+            <h2>stal</h2>
+            <div class="file-input">
+                <label for="audioFile8">Choose audio (.ogg) file</label>
+                <input type="file" id="audioFile8" name="audioFile8" accept=".ogg">
+            </div>
+            <div class="file-input">
+                <label for="imageFile8">Choose texture (.png) file</label>
+                <input type="file" id="imageFile8" name="imageFile8" accept=".png">
+            </div>
+        </div>
+        <div class="file-container">
+            <h2>strad</h2>
+            <div class="file-input">
+                <label for="audioFile9">Choose audio (.ogg) file</label>
+                <input type="file" id="audioFile9" name="audioFile9" accept=".ogg">
+            </div>
+            <div class="file-input">
+                <label for="imageFile9">Choose texture (.png) file</label>
+                <input type="file" id="imageFile9" name="imageFile9" accept=".png">
+            </div>
+        </div>
+        <div class="file-container">
+            <h2>ward</h2>
+            <div class="file-input">
+                <label for="audioFile10">Choose audio (.ogg) file</label>
+                <input type="file" id="audioFile10" name="audioFile10" accept=".ogg">
+            </div>
+            <div class="file-input">
+                <label for="imageFile10">Choose texture (.png) file</label>
+                <input type="file" id="imageFile10" name="imageFile10" accept=".png">
+            </div>
+        </div>
+        <div class="file-container">
+            <h2>11</h2>
+            <div class="file-input">
+                <label for="audioFile11">Choose audio (.ogg) file</label>
+                <input type="file" id="audioFile11" name="audioFile11" accept=".ogg">
+            </div>
+            <div class="file-input">
+                <label for="imageFile11">Choose texture (.png) file</label>
+                <input type="file" id="imageFile11" name="imageFile11" accept=".png">
+            </div>
+        </div>
+        <div class="file-container">
+            <h2>wait</h2>
+            <div class="file-input">
+                <label for="audioFile12">Choose audio (.ogg) file</label>
+                <input type="file" id="audioFile12" name="audioFile12" accept=".ogg">
+            </div>
+            <div class="file-input">
+                <label for="imageFile12">Choose texture (.png) file</label>
+                <input type="file" id="imageFile12" name="imageFile12" accept=".png">
+            </div>
+        </div>
+        <div class="file-container">
+            <h2>otherside</h2>
+            <div class="file-input">
+                <label for="audioFile13">Choose audio (.ogg) file</label>
+                <input type="file" id="audioFile13" name="audioFile13" accept=".ogg">
+            </div>
+            <div class="file-input">
+                <label for="imageFile13">Choose texture (.png) file</label>
+                <input type="file" id="imageFile13" name="imageFile13" accept=".png">
+            </div>
+        </div>
+        <div class="file-container">
+            <h2>5</h2>
+            <div class="file-input">
+                <label for="audioFile14">Choose audio (.ogg) file</label>
+                <input type="file" id="audioFile14" name="audioFile14" accept=".ogg">
+            </div>
+            <div class="file-input">
+                <label for="imageFile14">Choose texture (.png) file</label>
+                <input type="file" id="imageFile14" name="imageFile14" accept=".png">
+            </div>
+        </div>
+        <div class="file-container">
+            <h2>Pigstep</h2>
+            <div class="file-input">
+                <label for="audioFile15">Choose audio (.ogg) file</label>
+                <input type="file" id="audioFile15" name="audioFile15" accept=".ogg">
+            </div>
+            <div class="file-input">
+                <label for="imageFile15">Choose texture (.png) file</label>
+                <input type="file" id="imageFile15" name="imageFile15" accept=".png">
+            </div>
+        </div>
+        <button class="button-37" role="button" type="submit">Generate Texture Pack!</button>
+    </form>
+
+    <script>
+	document.getElementById('fileUploadForm').addEventListener('submit', function(event) {
+		event.preventDefault(); // Zatrzymanie domyślnego zachowania formularza
+		let listaAudio = [];
+		let listaImage = [];
+		for (let i = 1; i <= 15; i++) {
+			const audioFile = document.getElementById('audioFile' + i).files[0];
+			const imageFile = document.getElementById('imageFile' + i).files[0];
+			const header = document.querySelector('.file-container:nth-of-type(' + i + ') h2').textContent.trim().toLowerCase();
+
+			if (audioFile) {
+				// Zmiana rozszerzenia pliku audio z .mp3 na .ogg
+				const audioFileName = header + ".ogg";
+				listaAudio.push({ file: audioFile, header: header, newName: audioFileName });
+			}
+
+			if (imageFile) {
+				// Zmiana rozszerzenia pliku obrazu z .jpg/.jpeg na .png
+				const imageFileName = "music_disc_"+header + ".png"; 
+				listaImage.push({ file: imageFile, header: header, newName: imageFileName });
+			}
+		}
+
+		// Tutaj możesz wykonać dalsze operacje na listach listaAudio i listaImage
+		// np. wysłanie ich na serwer lub dalsze przetwarzanie
+
+		console.log('Lista plików audio:', listaAudio);
+		console.log('Lista plików obrazków:', listaImage);
+
+		if (listaAudio.length > 0 || listaImage.length > 0) {
+			var zip = new JSZip();
+			
+			zip.file("pack.mcmeta", JSON.stringify({
+				"pack": {
+					"pack_format": 32,
+					"description": "Made by mrozkar"
+				}
+			}, null, 2)); // Używamy JSON.stringify do sformatowania treści pliku
+			// Tworzenie struktury plików i przechowywanie referencji do folderu textures
+			var texturesFolder = zip.folder('assets')
+				.folder('minecraft')
+				.folder('textures')
+				.folder('item');
+
+			// Dodawanie pliku do folderu textures
+			listaImage.forEach((element, index) => {
+				texturesFolder.file(listaImage[index].newName, listaImage[index].file);
+			});
+
+			// Tworzenie struktury plików i przechowywanie referencji do folderu textures
+			var recordsFolder = zip.folder('assets')
+				.folder('minecraft')
+				.folder('sounds')
+				.folder('records');
+			
+			// Dodawanie pliku do folderu textures
+			listaAudio.forEach((element, index) => {
+				recordsFolder.file(listaAudio[index].newName, listaAudio[index].file);
+			});
+
+
+			zip.generateAsync({ type: "blob" })
+				.then(function(content) {
+					// Użycie FileSaver.js do zapisu pliku, można również zrobić to manualnie
+					saveAs(content, "MusicPack.zip");
+				});
+		} else {
+			alert("Please upload at least one file");
+		}
+	});
+
+    </script>
+</body>
+</html>
