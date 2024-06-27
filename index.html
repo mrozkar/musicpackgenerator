@@ -65,6 +65,25 @@
             margin: 0 auto;
         }
 		
+		.packName {
+			border: 3px solid #000;
+			border-radius: 5px;
+			height: 50px;
+			line-height: normal;
+			color: #282828;
+			display: block;
+			margin-top: 5px;
+			margin-bottom: 5px;
+			box-sizing: border-box;
+			user-select: auto;
+			font-size: 16px;
+			padding: 0 6px;
+			padding-left: 12px;
+			:focus{
+				border: 3px solid #5551ff;
+			}
+		}
+		
 		.button-37 {
 		  background-color: #13aa52;
 		  border: 5px inset #13aa52;
@@ -106,6 +125,7 @@
 	<p>Choose which discs you want to replace. You dont have to insert image and audio, you can just select one</p>
 	<a href="https://convertio.co/mp3-ogg/" target="_blank">Convert mp3 to ogg</a>
 	<a href="https://convertio.co/jpg-png/" target="_blank">Convert jpg to png</a>
+	<input type="text" id="packName" class="packName" placeholder="insert your pack name">
     <form id="fileUploadForm">
         <div class="file-container">
             <h2>13</h2>
@@ -303,7 +323,12 @@
 
 		console.log('Lista plików audio:', listaAudio);
 		console.log('Lista plików obrazków:', listaImage);
-
+		var Name = document.getElementById("packName")
+		var MusicPackName = Name.value;
+		if (!MusicPackName) {
+			MusicPackName = "MusicPack"
+		}
+		console.log(MusicPackName)
 		if (listaAudio.length > 0 || listaImage.length > 0) {
 			var zip = new JSZip();
 			
@@ -339,7 +364,7 @@
 			zip.generateAsync({ type: "blob" })
 				.then(function(content) {
 					// Użycie FileSaver.js do zapisu pliku, można również zrobić to manualnie
-					saveAs(content, "MusicPack.zip");
+					saveAs(content, MusicPackName);
 				});
 		} else {
 			alert("Please upload at least one file");
