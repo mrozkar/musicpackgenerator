@@ -33,7 +33,7 @@
 		}
 		
 		h1 {
-		color: #ffffff;
+			color: #ffffff;
 		}
 		
 		p {
@@ -119,12 +119,29 @@
 		  }
 		}
 		
+		.icon {
+			color: #ffffff;
+			font-size: 24px;
+			font-family: Arial, sans-serif;
+		}		
+		
+		.iconLabel {
+			color: #ffffff;
+			font-size: 16px;
+			font-family: Arial, sans-serif;
+			margin-top: 5px;
+			margin-bottom: 5px;
+		}
 		
     </style>
 </head>
 <body>
     <h1>Music Texture Pack Genetator</h1>
 	<p>Choose which discs you want to replace. You dont have to insert image and audio, you can just select one</p>
+	
+	<label class="icon">Choose your pack icon</label>
+	<input type="file" id="packIcon" class="iconLabel" name="packIcon" accept=".png">
+	
 	<a href="https://convertio.co/mp3-ogg/" target="_blank">Convert mp3 to ogg</a>
 	<a href="https://convertio.co/jpg-png/" target="_blank">Convert jpg to png</a>
 	<input type="text" id="packName" class="packName" placeholder="insert your pack name">
@@ -298,80 +315,89 @@
     </form>
 
     <script>
-	document.getElementById('fileUploadForm').addEventListener('submit', function(event) {
-		event.preventDefault(); // Zatrzymanie domyślnego zachowania formularza
-		let listaAudio = [];
-		let listaImage = [];
-		for (let i = 1; i <= 15; i++) {
-			const audioFile = document.getElementById('audioFile' + i).files[0];
-			const imageFile = document.getElementById('imageFile' + i).files[0];
-			const header = document.querySelector('.file-container:nth-of-type(' + i + ') h2').textContent.trim().toLowerCase();
+        document.getElementById('fileUploadForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Zatrzymanie domyślnego zachowania formularza
+            let listaAudio = [];
+            let listaImage = [];
+            const iconFile = document.getElementById('packIcon').files[0];
+            
+            for (let i = 1; i <= 15; i++) {
+                const audioFile = document.getElementById('audioFile' + i)?.files[0];
+                const imageFile = document.getElementById('imageFile' + i)?.files[0];
+                const headerElement = document.querySelector('.file-container:nth-of-type(' + i + ') h2');
+                if (!headerElement) continue;
+                const header = headerElement.textContent.trim().toLowerCase();
 
-			if (audioFile) {
-				// Zmiana rozszerzenia pliku audio z .mp3 na .ogg
-				const audioFileName = header + ".ogg";
-				listaAudio.push({ file: audioFile, header: header, newName: audioFileName });
-			}
+                if (audioFile) {
+                    // Zmiana rozszerzenia pliku audio z .mp3 na .ogg
+                    const audioFileName = header + ".ogg";
+                    listaAudio.push({ file: audioFile, header: header, newName: audioFileName });
+                }
 
-			if (imageFile) {
-				// Zmiana rozszerzenia pliku obrazu z .jpg/.jpeg na .png
-				const imageFileName = "music_disc_"+header + ".png"; 
-				listaImage.push({ file: imageFile, header: header, newName: imageFileName });
-			}
-		}
+                if (imageFile) {
+                    // Zmiana rozszerzenia pliku obrazu z .jpg/.jpeg na .png
+                    const imageFileName = "music_disc_" + header + ".png"; 
+                    listaImage.push({ file: imageFile, header: header, newName: imageFileName });
+                }
+            }
 
-		// Tutaj możesz wykonać dalsze operacje na listach listaAudio i listaImage
-		// np. wysłanie ich na serwer lub dalsze przetwarzanie
+            var packNameElement = document.getElementById("packName");
+            var musicPackName = packNameElement.value || "MusicPack";
+            if (listaAudio.length > 0 || listaImage.length > 0) {
+                var zip = new JSZip();
 
-		console.log('Lista plików audio:', listaAudio);
-		console.log('Lista plików obrazków:', listaImage);
-		var Name = document.getElementById("packName")
-		var MusicPackName = Name.value;
-		if (!MusicPackName) {
-			MusicPackName = "MusicPack"
-		}
-		console.log(MusicPackName)
-		if (listaAudio.length > 0 || listaImage.length > 0) {
-			var zip = new JSZip();
-			
-			zip.file("pack.mcmeta", JSON.stringify({
-				"pack": {
-					"pack_format": 32,
-					"description": "Made by mrozkar"
-				}
-			}, null, 2)); // Używamy JSON.stringify do sformatowania treści pliku
-			// Tworzenie struktury plików i przechowywanie referencji do folderu textures
-			var texturesFolder = zip.folder('assets')
-				.folder('minecraft')
-				.folder('textures')
-				.folder('item');
+                zip.file("pack.mcmeta", JSON.stringify({
+                    "pack": {
+                        "pack_format": 32,
+                        "description": "Made by mrozkar"
+                    }
+                }, null, 2)); // Używamy JSON.stringify do sformatowania treści pliku
 
-			// Dodawanie pliku do folderu textures
-			listaImage.forEach((element, index) => {
-				texturesFolder.file(listaImage[index].newName, listaImage[index].file);
-			});
+                if (iconFile) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        zip.file("pack.png", e.target.result, { binary: true });
 
-			// Tworzenie struktury plików i przechowywanie referencji do folderu textures
-			var recordsFolder = zip.folder('assets')
-				.folder('minecraft')
-				.folder('sounds')
-				.folder('records');
-			
-			// Dodawanie pliku do folderu textures
-			listaAudio.forEach((element, index) => {
-				recordsFolder.file(listaAudio[index].newName, listaAudio[index].file);
-			});
+                        addFilesToZip(zip, listaAudio, listaImage, musicPackName);
+                    };
+                    reader.readAsArrayBuffer(iconFile);
+                } else {
+                    addFilesToZip(zip, listaAudio, listaImage, musicPackName);
+                }
+            } else {
+                alert("Please upload at least one file");
+            }
+        });
 
+        function addFilesToZip(zip, listaAudio, listaImage, musicPackName) {
+            // Tworzenie struktury plików i przechowywanie referencji do folderu textures
+            var texturesFolder = zip.folder('assets')
+                .folder('minecraft')
+                .folder('textures')
+                .folder('item');
 
-			zip.generateAsync({ type: "blob" })
-				.then(function(content) {
-					// Użycie FileSaver.js do zapisu pliku, można również zrobić to manualnie
-					saveAs(content, MusicPackName);
-				});
-		} else {
-			alert("Please upload at least one file");
-		}
-	});
+            // Dodawanie pliku do folderu textures
+            listaImage.forEach((element) => {
+                texturesFolder.file(element.newName, element.file);
+            });
+
+            // Tworzenie struktury plików i przechowywanie referencji do folderu records
+            var recordsFolder = zip.folder('assets')
+                .folder('minecraft')
+                .folder('sounds')
+                .folder('records');
+            
+            // Dodawanie pliku do folderu records
+            listaAudio.forEach((element) => {
+                recordsFolder.file(element.newName, element.file);
+            });
+
+            zip.generateAsync({ type: "blob" })
+                .then(function(content) {
+                    // Użycie FileSaver.js do zapisu pliku, można również zrobić to manualnie
+                    saveAs(content, musicPackName + ".zip");
+                });
+        }
 
     </script>
 </body>
