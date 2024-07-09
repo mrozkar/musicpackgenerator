@@ -311,18 +311,53 @@
                 <label for="imageFile15">Choose texture (.png) file</label>
                 <input type="file" id="imageFile15" name="imageFile15" accept=".png">
             </div>
-        </div>        </div>
+        </div>        
         <div class="file-container" style="background-image: url('images/relic.png'); background-size: 220px 220px;">
             <h2>Relic</h2>
             <div class="file-input">
-                <label for="audioFile15">Choose audio (.ogg) file</label>
+                <label for="audioFile16">Choose audio (.ogg) file</label>
                 <input type="file" id="audioFile16" name="audioFile16" accept=".ogg">
             </div>
             <div class="file-input">
-                <label for="imageFile15">Choose texture (.png) file</label>
+                <label for="imageFile16">Choose texture (.png) file</label>
                 <input type="file" id="imageFile16" name="imageFile16" accept=".png">
             </div>
         </div>
+		<div class="file-container" style="background-image: url('images/creator.png'); background-size: 220px 220px;">
+            <h2>Creator</h2>
+            <div class="file-input">
+                <label for="audioFile17">Choose audio (.ogg) file</label>
+                <input type="file" id="audioFile17" name="audioFile17" accept=".ogg">
+            </div>
+            <div class="file-input">
+                <label for="imageFile17">Choose texture (.png) file</label>
+                <input type="file" id="imageFile17" name="imageFile17" accept=".png">
+            </div>
+        </div>		
+		<div class="file-container" style="background-image: url('images/creator_music_box.png'); background-size: 220px 220px;">
+            <h2>Creator_music_box</h2>
+            <div class="file-input">
+                <label for="audioFile18">Choose audio (.ogg) file</label>
+                <input type="file" id="audioFile18" name="audioFile18" accept=".ogg">
+            </div>
+            <div class="file-input">
+                <label for="imageFile18">Choose texture (.png) file</label>
+                <input type="file" id="imageFile18" name="imageFile18" accept=".png">
+            </div>
+        </div>
+				
+		<div class="file-container" style="background-image: url('images/precipice.png'); background-size: 220px 220px;">
+            <h2>Precipice</h2>
+            <div class="file-input">
+                <label for="audioFile19">Choose audio (.ogg) file</label>
+                <input type="file" id="audioFile19" name="audioFile19" accept=".ogg">
+            </div>
+            <div class="file-input">
+                <label for="imageFile19">Choose texture (.png) file</label>
+                <input type="file" id="imageFile19" name="imageFile19" accept=".png">
+            </div>
+        </div>
+		
         <button class="button-37" role="button" type="submit">Generate Resource Pack!</button>
     </form>
 
@@ -333,7 +368,7 @@
             let listaImage = [];
             const iconFile = document.getElementById('packIcon').files[0];
             
-            for (let i = 1; i <= 16; i++) {
+            for (let i = 1; i <= 19; i++) {
                 const audioFile = document.getElementById('audioFile' + i)?.files[0];
                 const imageFile = document.getElementById('imageFile' + i)?.files[0];
                 const headerElement = document.querySelector('.file-container:nth-of-type(' + i + ') h2');
